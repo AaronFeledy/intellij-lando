@@ -1,44 +1,25 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.aaronfeledy.landointellijplugin</id>
-    <name>Lando</name>
-    <vendor>Aaron Feledy</vendor>
+  <id>com.github.aaronfeledy.landointellijplugin</id>
+  <name>Lando</name>
+  <vendor>Aaron Feledy</vendor>
 
-    <depends>com.intellij.modules.platform</depends>
+  <depends>com.intellij.modules.platform</depends>
 
-    <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.aaronfeledy.landointellijplugin.services.LandoApplicationService"/>
-        <projectService serviceImplementation="com.github.aaronfeledy.landointellijplugin.services.LandoProjectService"/>
-    </extensions>
+  <extensions defaultExtensionNs="com.intellij">
+    <applicationService serviceImplementation="com.github.aaronfeledy.landointellijplugin.services.LandoApplicationService"/>
+    <projectService serviceImplementation="com.github.aaronfeledy.landointellijplugin.services.LandoProjectService"/>
+  </extensions>
 
-    <actions>
-        <!--
-          See https://plugins.jetbrains.com/docs/intellij/basic-action-system.html#registering-actions
-          for information about the elements and attributes used for actions and groups.
-          This <action> element adds a static menu item in first position of the Tools menu that shows PopupDialogAction.
-          Note this element has no text or description attributes because translations for them are given
-          by action-id in the resource-bundle.
-          An <override-text> element is also used for demonstration purposes to show alternate text and description strings
-          for this action's entries in the MainMenu. (Which includes the ToolsMenu. Try commenting out the override-text
-          element and see how the menu text changes.) The alternate text and description attributes do not
-          appear here because they are defined by action-id in the resource-bundle.
-        -->
-        <action id="com.github.aaronfeledy.landointellijplugin.actions.LandoStartAction" class="com.github.aaronfeledy.landointellijplugin.actions.LandoStartAction"
-                text="Lando" description="Integrate Lando"
-                icon="icons.LandoIcons.Lando_default_icon">
-            <add-to-group group-id="ToolsMenu" anchor="last"/>
-            <override-text place="MainMenu" text="Lando Test 1"/>
-            <keyboard-shortcut first-keystroke="control alt L" second-keystroke="S" keymap="$default"/>
-            <mouse-shortcut keystroke="control button3 doubleClick" keymap="$default"/>
-        </action>
-        <group id="com.github.aaronfeledy.landointellijplugin.actions.LandoActionGroup" class="com.github.aaronfeledy.landointellijplugin.actions.LandoActionGroup"
-               popup="true" text="Lando" icon="icons.LandoIcons.Lando_default_icon" description="Execute Lando commands">
-            <add-to-group group-id="ToolsMenu"/>
-        </group>
-    </actions>
+  <actions>
+    <group id="com.github.aaronfeledy.landointellijplugin.actions.LandoActionGroup" class="com.github.aaronfeledy.landointellijplugin.actions.LandoActionGroup"
+           popup="true" text="Lando" icon="icons.LandoIcons.Lando_default_icon" description="Execute Lando commands">
+      <add-to-group group-id="ToolsMenu"/>
+    </group>
+  </actions>
 
-    <applicationListeners>
-        <listener class="com.github.aaronfeledy.landointellijplugin.listeners.LandoManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
-    </applicationListeners>
+  <applicationListeners>
+    <listener class="com.github.aaronfeledy.landointellijplugin.listeners.LandoManagerListener"
+              topic="com.intellij.openapi.project.ProjectManagerListener"/>
+  </applicationListeners>
 </idea-plugin>

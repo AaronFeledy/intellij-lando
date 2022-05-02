@@ -12,16 +12,16 @@ import icons.LandoIcons
  * @see ActionGroup
  */
 class LandoActionGroup : ActionGroup() {
-    /**
-     * Returns an array of menu actions for the group.
-     *
-     * @param e Event received when the associated group-id menu is chosen.
-     * @return AnAction[] An instance of [AnAction], in this case containing a single instance of the
-     * [LandoStartAction] class.
-     */
-    override fun getChildren(e: AnActionEvent?): Array<AnAction> {
-        return arrayOf(
-            LandoStartAction("Start", "Start your Lando environment", LandoIcons.Lando_default_icon)
-        )
-    }
+  /**
+   * Returns an array of menu actions for the group.
+   *
+   * @param e Event received when the associated group-id menu is chosen.
+   * @return AnAction[] An instance of [AnAction], in this case containing a single instance of the
+   * [LandoStartAction] class.
+   */
+  override fun getChildren(e: AnActionEvent?): Array<AnAction> {
+    return arrayOf(
+      LandoStartAction("Start", "Start your Lando environment", LandoIcons.Lando_default_icon)
+    )
+  }
 }
