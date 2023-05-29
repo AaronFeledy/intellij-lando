@@ -1,13 +1,17 @@
 package com.github.aaronfeledy.landointellijplugin.actions
 
-import com.intellij.execution.configurations.GeneralCommandLine
-import com.intellij.execution.process.CapturingProcessHandler
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.Messages
+import java.io.BufferedReader
+import java.io.File
+import java.io.InputStreamReader
 import javax.swing.Icon
 
+const val landoBin = "lando"
+const val landoCmd = "start"
 
 /**
  * Action class to start up a Lando environment.
@@ -38,22 +42,17 @@ class LandoStartAction : AnAction {
    * @param event Event received when the associated menu item is chosen.
    */
   override fun actionPerformed(event: AnActionEvent) {
-    // TODO: This currently only uses the Windows binary for Lando
-    val landoCmd = "C:\\Program Files\\Lando\\bin\\lando.exe"
-    val tenMinutes = 10 * 60 * 1000
-
     val project: Project? = event.project
-    val projectPath: String? = project?.basePath
-    val commandLine = GeneralCommandLine(landoCmd, "start").withWorkDirectory(projectPath)
-
-    val processHandler = CapturingProcessHandler(commandLine)
-    val output = processHandler.runProcess(tenMinutes)
-    if (output.exitCode != 0 || output.isCancelled || output.isTimeout) {
-      LOG.info(
-        "command: " + processHandler.commandLine + " has failed:" +
-            "ec=" + output.exitCode + ",cancelled=" + output.isCancelled + ",timeout=" + output.isTimeout
-            + ",stderr=" + output.stderr + ",stdout=" + output.stdout
-      )
+    if (project != null) {
+      val process = ProcessBuilder(landoBin, landoCmd).directory(project.basePath?.let { File(it) }).start()
+      val reader = BufferedReader(InputStreamReader(process.inputStream))
+      val output = StringBuilder()
+      var line: String? = reader.readLine()
+      while (line != null) {
+        output.append(line).append("\n")
+        line = reader.readLine()
+      }
+      Messages.showMessageDialog(project, output.toString(), "Lando Start Output", Messages.getInformationIcon())
     }
   }
 
