@@ -1,28 +1,31 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-  <id>com.github.aaronfeledy.landointellijplugin</id>
-  <name>Lando</name>
-  <vendor>Aaron Feledy</vendor>
+    <id>com.github.aaronfeledy.landointellijplugin</id>
+    <name>Lando</name>
+    <vendor>Aaron Feledy</vendor>
 
-  <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.platform</depends>
 
-  <extensions defaultExtensionNs="com.intellij">
-    <applicationService serviceImplementation="com.github.aaronfeledy.landointellijplugin.services.LandoApplicationService"/>
-    <projectService serviceImplementation="com.github.aaronfeledy.landointellijplugin.services.LandoProjectService"/>
-  </extensions>
+    <resource-bundle>messages.LandoBundle</resource-bundle>
 
-  <actions>
-    <action id="LandoStartAction" class="com.github.aaronfeledy.landointellijplugin.actions.LandoStartAction" text="Start Lando">
-      <add-to-group group-id="ToolsMenu" anchor="last"/>
-    </action>
-    <group id="com.github.aaronfeledy.landointellijplugin.actions.LandoActionGroup" class="com.github.aaronfeledy.landointellijplugin.actions.LandoActionGroup"
-           popup="true" text="Lando" icon="icons.LandoIcons.Lando_default_icon" description="Execute Lando commands">
-      <add-to-group group-id="ToolsMenu"/>
-    </group>
-  </actions>
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow factoryClass="org.jetbrains.plugins.template.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
+        <applicationService serviceImplementation="com.github.aaronfeledy.landointellijplugin.services.LandoApplicationService"/>
+        <projectService serviceImplementation="com.github.aaronfeledy.landointellijplugin.services.LandoProjectService"/>
+    </extensions>
 
-  <applicationListeners>
-    <listener class="com.github.aaronfeledy.landointellijplugin.listeners.LandoManagerListener"
-              topic="com.intellij.openapi.project.ProjectManagerListener"/>
-  </applicationListeners>
+    <actions>
+        <action id="LandoStartAction" class="com.github.aaronfeledy.landointellijplugin.actions.LandoStartAction" text="Start Lando">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </action>
+        <group id="com.github.aaronfeledy.landointellijplugin.actions.LandoActionGroup" class="com.github.aaronfeledy.landointellijplugin.actions.LandoActionGroup"
+               popup="true" text="Lando" icon="icons.LandoIcons.Lando_default_icon" description="Execute Lando commands">
+            <add-to-group group-id="ToolsMenu"/>
+        </group>
+    </actions>
+
+    <applicationListeners>
+        <listener class="com.github.aaronfeledy.landointellijplugin.listeners.LandoManagerListener"
+                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
+    </applicationListeners>
 </idea-plugin>
