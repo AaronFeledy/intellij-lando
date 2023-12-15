@@ -15,13 +15,14 @@
     </extensions>
 
     <actions>
-        <action id="LandoStartAction" class="com.github.aaronfeledy.landointellijplugin.actions.LandoStartAction" text="Start Lando">
-            <add-to-group group-id="ToolsMenu" anchor="last"/>
-        </action>
-        <group id="com.github.aaronfeledy.landointellijplugin.actions.LandoActionGroup" class="com.github.aaronfeledy.landointellijplugin.actions.LandoActionGroup"
-               popup="true" text="Lando" icon="icons.LandoIcons.Lando_default_icon" description="Execute Lando commands">
+        <group id="LandoActionGroup" class="com.github.aaronfeledy.landointellijplugin.actions.LandoActionGroup"
+               text="Lando" icon="LandoIcons.default" popup="true" description="Execute Lando commands">
             <add-to-group group-id="ToolsMenu"/>
         </group>
+        <action id="LandoStartAction" class="com.github.aaronfeledy.landointellijplugin.actions.LandoStartAction"
+                text="Start" icon="com.intellij.icons.ExpUiIcons.Toolwindow.Run">
+            <add-to-group group-id="LandoActionGroup" anchor="last"/>
+        </action>
     </actions>
 
     <applicationListeners>
