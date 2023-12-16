@@ -1,5 +1,5 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
-<idea-plugin>
+<idea-plugin url="https://github.com/AaronFeledy/lando-intellij-plugin">
     <id>com.github.aaronfeledy.landointellijplugin</id>
     <name>Lando</name>
     <vendor>Aaron Feledy</vendor>
@@ -9,7 +9,11 @@
     <resource-bundle>messages.LandoBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="org.jetbrains.plugins.template.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
+        <toolWindow id="Lando" anchor="bottom" icon="LandoIcons.default"
+                    doNotActivateOnStart="false"
+                    largeStripeAnchor="bottom"
+                    factoryClass="com.github.aaronfeledy.landointellijplugin.ui.LandoToolWindowFactory"
+                    canCloseContents="true" secondary="false"/>
         <applicationService serviceImplementation="com.github.aaronfeledy.landointellijplugin.services.LandoApplicationService"/>
         <projectService serviceImplementation="com.github.aaronfeledy.landointellijplugin.services.LandoProjectService"/>
     </extensions>
