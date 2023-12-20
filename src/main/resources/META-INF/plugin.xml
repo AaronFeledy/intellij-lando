@@ -14,8 +14,6 @@
                     largeStripeAnchor="bottom"
                     factoryClass="com.github.aaronfeledy.landointellijplugin.ui.LandoToolWindowFactory"
                     canCloseContents="true" secondary="false"/>
-        <applicationService serviceImplementation="com.github.aaronfeledy.landointellijplugin.services.LandoApplicationService"/>
-        <projectService serviceImplementation="com.github.aaronfeledy.landointellijplugin.services.LandoProjectService"/>
     </extensions>
 
     <actions>

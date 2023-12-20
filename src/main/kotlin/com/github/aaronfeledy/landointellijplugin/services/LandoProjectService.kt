@@ -1,11 +1,9 @@
 package com.github.aaronfeledy.landointellijplugin.services
 
 import com.intellij.openapi.project.Project
-import com.github.aaronfeledy.landointellijplugin.LandoBundle
+import com.intellij.openapi.components.Service
 
-class LandoProjectService(project: Project) {
-
-    init {
-        println(LandoBundle.message("projectService", project.name))
-    }
+@Service(Service.Level.PROJECT)
+class LandoProjectService(val project: Project) {
+    val baseDir: String = project.basePath ?: throw IllegalStateException("Project base path is null")
 }
