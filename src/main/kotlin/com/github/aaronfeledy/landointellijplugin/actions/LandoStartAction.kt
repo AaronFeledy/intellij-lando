@@ -42,7 +42,7 @@ class LandoStartAction
     override fun actionPerformed(event: AnActionEvent) {
         val project: Project? = event.project
         if (project != null) {
-            val lando = LandoExec(project, "start").run()
+            LandoExec("start").run()
         }
     }
 
