@@ -9,7 +9,7 @@
     <resource-bundle>messages.LandoBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow id="Lando" anchor="bottom" icon="LandoIcons.default"
+        <toolWindow id="Lando" anchor="bottom" icon="LandoIcons.Lando13"
                     doNotActivateOnStart="false"
                     largeStripeAnchor="bottom"
                     factoryClass="com.github.aaronfeledy.landointellijplugin.ui.LandoToolWindowFactory"
@@ -18,7 +18,7 @@
 
     <actions>
         <group id="LandoActionGroup" class="com.github.aaronfeledy.landointellijplugin.actions.LandoActionGroup"
-               text="Lando" icon="LandoIcons.default" popup="true" description="Execute Lando commands">
+               text="Lando" icon="LandoIcons.Lando" popup="true" description="Execute Lando commands">
             <add-to-group group-id="ToolsMenu"/>
         </group>
         <action id="LandoStartAction" class="com.github.aaronfeledy.landointellijplugin.actions.LandoStartAction"

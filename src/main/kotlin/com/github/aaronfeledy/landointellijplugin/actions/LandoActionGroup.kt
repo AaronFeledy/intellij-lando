@@ -21,7 +21,7 @@ class LandoActionGroup : ActionGroup() {
    */
   override fun getChildren(e: AnActionEvent?): Array<AnAction> {
     return arrayOf(
-      LandoStartAction("Start", "Start your Lando environment", LandoIcons.default)
+      LandoStartAction("Start", "Start your Lando environment", LandoIcons.Lando)
     )
   }
 }
