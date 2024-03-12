@@ -4,7 +4,6 @@ import com.github.aaronfeledy.landointellijplugin.services.LandoAppService
 import com.intellij.execution.process.ProcessHandler
 import com.intellij.execution.ui.ConsoleViewContentType
 import com.github.aaronfeledy.landointellijplugin.ui.console.JeditermConsoleView
-import com.intellij.openapi.application.ApplicationManager
 import java.io.File
 import java.io.OutputStream
 
@@ -59,11 +58,11 @@ class LandoExec(private val command: String) {
         val processBuilder = ProcessBuilder(landoBin, command)
 
         // Get the LandoAppService instance
-        val appService = ApplicationManager.getApplication().getService(LandoAppService::class.java)
+        val appService = LandoAppService.getInstance()
 
         // If the directory is not set, use the root directory of the Lando application
         if (directory.isEmpty()) {
-            directory = appService.appRoot
+            directory = appService.appRoot?.path!!
         }
         // Set the directory for the process builder
         processBuilder.directory(File(directory))
@@ -80,7 +79,7 @@ class LandoExec(private val command: String) {
         var landoConsoleView: JeditermConsoleView? = null
         if (attachToConsole) {
             // Create a new console view with the process
-            landoConsoleView = JeditermConsoleView(appService.projectService.project, process)
+            landoConsoleView = JeditermConsoleView(appService.thisProject.project, process)
         }
 
         // Create a new process handler
