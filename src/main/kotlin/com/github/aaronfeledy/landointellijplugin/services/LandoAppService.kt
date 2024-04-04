@@ -2,6 +2,7 @@ package com.github.aaronfeledy.landointellijplugin.services
 
 import com.github.aaronfeledy.landointellijplugin.LandoExec
 import com.github.aaronfeledy.landointellijplugin.ServiceData
+import com.github.aaronfeledy.landointellijplugin.listeners.LandoAppServiceListener
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.intellij.execution.process.ProcessHandler
@@ -12,6 +13,7 @@ import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.ProjectManager
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.util.ConcurrencyUtil
+import com.intellij.util.messages.Topic
 import java.util.*
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
@@ -38,6 +40,22 @@ class LandoAppService() : Disposable {
 
     // Map for storing the status of the services in the Lando application
     var services: MutableMap<String, ServiceData> = HashMap()
+
+    // Indicate whether the Lando application has been started
+    var started: Boolean = false
+        set(value) {
+            field = value
+            notifyListeners()
+        }
+        get() {
+            return services.isNotEmpty()
+        }
+
+    init {
+        if (appRoot == null) {
+            logger.debug("Could not find project root directory")
+        }
+    }
 
     /**
      * Fetches the status of the Lando application.
@@ -85,6 +103,10 @@ class LandoAppService() : Disposable {
         return gson.fromJson(jsonData, serviceListType)
     }
 
+    private fun notifyListeners() {
+        ApplicationManager.getApplication().messageBus.syncPublisher(TOPIC)
+    }
+
     /**
      * Disposes the LandoAppService, shutting down the status watcher.
      */
@@ -93,6 +115,7 @@ class LandoAppService() : Disposable {
     }
 
     companion object {
+        val TOPIC = Topic.create("LandoAppServiceTopic", LandoAppServiceListener::class.java)
         fun getInstance(): LandoAppService = ApplicationManager.getApplication().getService(LandoAppService::class.java)
     }
 }

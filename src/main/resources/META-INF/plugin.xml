@@ -14,6 +14,8 @@
                     largeStripeAnchor="bottom"
                     factoryClass="com.github.aaronfeledy.landointellijplugin.ui.LandoToolWindowFactory"
                     canCloseContents="true" secondary="false"/>
+        <statusBarWidgetFactory id="LandoStatusWidget"
+                                implementation="com.github.aaronfeledy.landointellijplugin.ui.widget.LandoStatusWidgetFactory"/>
     </extensions>
 
     <actions>
