@@ -5,10 +5,13 @@
     <vendor>Aaron Feledy</vendor>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>org.jetbrains.plugins.yaml</depends>
 
     <resource-bundle>messages.LandoBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
+        <fileType name="landofile" extensions="yml" language="yaml" fieldName="LANDOFILE"
+                  implementationClass="com.github.aaronfeledy.landointellijplugin.config.LandofileFileType"/>
         <toolWindow id="Lando" anchor="bottom" icon="LandoIcons.Lando13"
                     doNotActivateOnStart="false"
                     largeStripeAnchor="bottom"
