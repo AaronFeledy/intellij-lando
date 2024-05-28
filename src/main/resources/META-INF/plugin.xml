@@ -6,6 +6,7 @@
 
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.plugins.yaml</depends>
+    <depends>JavaScript</depends>
 
     <resource-bundle>messages.LandoBundle</resource-bundle>
 
@@ -19,6 +20,11 @@
                     canCloseContents="true" secondary="false"/>
         <statusBarWidgetFactory id="LandoStatusWidget"
                                 implementation="com.github.aaronfeledy.landointellijplugin.ui.widget.LandoStatusWidgetFactory"/>
+    </extensions>
+
+    <!-- [JavaScript] ships with licensed versions of IDEA -->
+    <extensions defaultExtensionNs="JavaScript.JsonSchema">
+        <ProviderFactory implementation="com.github.aaronfeledy.landointellijplugin.config.LandofileJsonSchemaProviderFactory"/>
     </extensions>
 
     <actions>
