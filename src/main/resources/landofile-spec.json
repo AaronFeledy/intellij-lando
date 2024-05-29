@@ -18,32 +18,108 @@
     "recipe": {
       "type": "string",
       "description": "The recipe used for the Lando project.",
+      "examples": [
+        "lamp",
+        "drupal10",
+        "wordpress",
+        "mean",
+        "pantheon",
+        "laravel"
+      ]
     },
     "config": {
       "type": "object",
-      "description": "Configuration options for the recipe specified in the recipe key."
+      "description": "Configuration options for the recipe specified in the recipe key.",
+      "properties": {
+        "via": {
+          "type": "string",
+          "description": "The server type for the project.",
+          "default": "apache",
+          "examples": [
+            "apache",
+            "nginx"
+          ]
+        },
+        "webroot": {
+          "type": "string",
+          "description": "The webroot directory relative to the app root.",
+          "default": ".",
+          "examples": [
+            "web",
+            "docroot",
+            "drupal/web"
+          ]
+        },
+        "php": {
+          "type": "string",
+          "description": "The PHP version for the project.",
+          "examples": [
+            "7.3",
+            "8.2"
+          ]
+        },
+        "database": {
+          "type": "string",
+          "description": "The database type and version for the project.",
+          "examples": [
+            "mariadb:10.2"
+          ]
+        }
+      },
+      "additionalProperties": false
     },
     "env_file": {
       "type": "array",
       "description": "List of .env files to load into all services.",
       "items": {
         "type": "string"
-      }
+      },
+      "pattern": "^(?!\\.\\.)[^/].*[^/]$",
+      "examples": [
+        [
+          ".env"
+        ],
+        [
+          ".lando/mysql_vars.env",
+          ".lando/drupal_vars.env"
+        ],
+        [
+          "drupal/.env",
+          "frontend/.env"
+        ]
+      ]
     },
     "excludes": {
       "type": "array",
       "description": "List of directories to exclude from syncing to the Lando services.",
       "items": {
         "type": "string"
-      }
+      },
+      "examples": [
+        [
+          "vendor",
+          "web/modules/contrib",
+          "!web/modules/contrib/webform"
+        ],
+        [
+          "node_modules"
+        ]
+      ]
     },
     "services": {
       "type": "object",
       "description": "Lando service definitions."
     },
+    "proxy": {
+      "type": "object"
+    },
     "tooling": {
       "type": "object",
       "description": "Tooling definitions for the Lando project."
+    },
+    "events": {
+      "type": "object",
+      "description": "Attach commands to Lando events hooks."
     }
   }
 }
