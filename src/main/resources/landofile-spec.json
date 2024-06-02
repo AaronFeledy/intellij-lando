@@ -66,7 +66,7 @@
           ]
         }
       },
-      "additionalProperties": false
+      "additionalProperties": true
     },
     "env_file": {
       "type": "array",
@@ -108,18 +108,122 @@
     },
     "services": {
       "type": "object",
-      "description": "Lando service definitions."
+      "description": "Lando service definitions.",
+      "patternProperties": {
+        "^[a-zA-Z0-9._-]+$": {
+          "$ref": "#/$defs/lando/service"
+        }
+      },
+      "additionalProperties": false
     },
     "proxy": {
-      "type": "object"
+      "type": "object",
+      "description": "Proxy configuration for Lando services"
     },
     "tooling": {
       "type": "object",
-      "description": "Tooling definitions for the Lando project."
+      "description": "Tooling definitions for the Lando project.",
+      "patternProperties": {
+        "^[a-zA-Z0-9_-]+$": {
+          "type": "object",
+          "description": "The tooling command to be added to the Lando CLI."
+        }
+      }
     },
     "events": {
       "type": "object",
       "description": "Attach commands to Lando events hooks."
+    }
+  },
+  "$defs": {
+    "lando": {
+      "service": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of service.",
+            "examples": [
+              "node",
+              "php:7.4",
+              "nginx",
+              "apache",
+              "mysql:5.7",
+              "compose",
+              "lando"
+            ],
+            "pattern": "^[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+)?$"
+          },
+          "build": {
+            "type": "array",
+            "description": "Commands to run while the service is being built.",
+            "items": {
+              "type": "string"
+            },
+            "examples": [
+              [
+                "npm install"
+              ]
+            ]
+          },
+          "build_as_root": {
+            "type": "array",
+            "description": "Commands to run as the root user while the service is being built.",
+            "items": {
+              "type": "string"
+            },
+            "examples": [
+              [
+                "apt-get update",
+                "apt-get install -y curl"
+              ]
+            ]
+          },
+          "run": {
+            "type": "array",
+            "description": "Commands to run after the service is started.",
+            "items": {
+              "type": "string"
+            },
+            "examples": [
+              [
+                "drush config:import -y",
+                "drush cache:rebuild"
+              ]
+            ]
+          },
+          "run_as_root": {
+            "type": "array",
+            "description": "Commands to run as the root user after the service is started.",
+            "items": {
+              "type": "string"
+            },
+            "examples": [
+              [
+                "echo '127.0.0.1 mysite.lndo.site' >> /etc/hosts"
+              ]
+            ]
+          },
+          "ssl": {
+            "type": [
+              "boolean",
+              "number"
+            ],
+            "description": "SSL configuration for the service.",
+            "examples": [
+              3000,
+              false
+            ]
+          },
+          "sslExpose": {
+            "type": "boolean",
+            "description": "Expose SSL for the service."
+          },
+          "overrides": {
+            "type": "object"
+          }
+        }
+      }
     }
   }
 }
