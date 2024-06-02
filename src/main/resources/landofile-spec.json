@@ -125,10 +125,23 @@
       "description": "Tooling definitions for the Lando project.",
       "patternProperties": {
         "^[a-zA-Z0-9_-]+$": {
-          "type": "object",
-          "description": "The tooling command to be added to the Lando CLI."
+          "description": "The tooling command to be added to the Lando CLI.",
+          "oneOf": [
+            {
+              "type": "string",
+              "description": "Prevent the tool from being loaded.",
+              "enum": [
+                "disabled"
+              ],
+              "default": "disabled"
+            },
+            {
+              "$ref": "#/$defs/lando/tool"
+            }
+          ]
         }
-      }
+      },
+      "additionalProperties": false
     },
     "events": {
       "type": "object",
@@ -221,6 +234,134 @@
           },
           "overrides": {
             "type": "object"
+          }
+        }
+      },
+      "tool": {
+        "type": "object",
+        "properties": {
+          "service": {
+            "type": "string",
+            "description": "The service to run the tool in.",
+            "default": "appserver",
+            "examples": [
+              "appserver",
+              "database"
+            ]
+          },
+          "cmd": {
+            "type": [
+              "string",
+              "array"
+            ],
+            "description": "The command(s) to run for the tool.",
+            "items": {
+              "type": "string"
+            },
+            "examples": [
+              "npm install",
+              [
+                "npm install",
+                "npm run build"
+              ]
+            ]
+          },
+          "description": {
+            "type": "string",
+            "description": "Description to help users understand the function of your tooling command."
+          },
+          "dir": {
+            "type": "string",
+            "description": "The working directory to execute the command in.",
+            "examples": [
+              "docroot",
+              "/app"
+            ]
+          },
+          "user": {
+            "type": "string",
+            "description": "The user to run the tool as.",
+            "default": "www-data",
+            "examples": [
+              "root"
+            ]
+          },
+          "env": {
+            "type": "object",
+            "description": "Environment variables to set before running the command.",
+            "patternProperties": {
+              "^[a-zA-Z0-9_-]+$": {
+                "type": "string"
+              }
+            },
+            "examples": [
+              {
+                "COLUMNS": "80"
+              }
+            ]
+          },
+          "level": {
+            "type": "string",
+            "description": "Set to `app` to enable interactive options for the command.",
+            "enum": [
+              "app"
+            ]
+          },
+          "options": {
+            "type": "object",
+            "properties": {
+              "environment": {
+                "type": "object",
+                "properties": {
+                  "passthrough": {
+                    "type": "boolean",
+                    "description": "TODO",
+                    "default": true
+                  },
+                  "alias": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "describe": {
+                    "type": "string",
+                    "description": "Description of the environment option."
+                  },
+                  "interactive": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string"
+                      },
+                      "message": {
+                        "type": "string"
+                      },
+                      "choices": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "service"
+        ],
+        "dependencies": {
+          "options": {
+            "required": [
+              "level"
+            ]
           }
         }
       }
