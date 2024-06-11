@@ -1,9 +1,10 @@
 package com.github.aaronfeledy.landointellijplugin
 
-import com.github.aaronfeledy.landointellijplugin.services.LandoAppService
+import com.github.aaronfeledy.landointellijplugin.services.LandoProjectService
 import com.intellij.execution.process.ProcessHandler
 import com.intellij.execution.ui.ConsoleViewContentType
 import com.github.aaronfeledy.landointellijplugin.ui.console.JeditermConsoleView
+import com.intellij.openapi.project.Project
 import java.io.File
 import java.io.OutputStream
 
@@ -19,6 +20,8 @@ class LandoExec(private val command: String) {
     private var format: String = ""
 
     private var attachToConsole: Boolean = true
+
+    var project: Project? = null
 
     /**
      * Sets the directory for the Lando command.
@@ -60,9 +63,11 @@ class LandoExec(private val command: String) {
         // Get the LandoAppService instance
         val appService = LandoAppService.getInstance()
 
-        // If the directory is not set, use the root directory of the Lando application
-        if (directory.isEmpty()) {
-            directory = appService.appRoot?.path!!
+        // Default to the project root as working directory if none is set
+        if (directory.isEmpty() && project != null) {
+            directory = LandoProjectService.getInstance(project!!).appRoot?.path!!
+        } else if (directory.isEmpty()) {
+            directory = System.getProperty("user.dir")
         }
         // Set the directory for the process builder
         processBuilder.directory(File(directory))

@@ -1,5 +1,5 @@
 package com.github.aaronfeledy.landointellijplugin.listeners
 
-interface LandoAppServiceListener {
+interface LandoStatusListener {
     fun statusChanged()
 }
